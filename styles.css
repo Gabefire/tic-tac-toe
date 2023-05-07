@@ -1,0 +1,23 @@
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 50px;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, 200px);
+  grid-template-rows: repeat(3, 200px);
+}
+
+.board .cell:nth-child(n):nth-child(-n + 6) {
+  border-bottom: 3px solid black;
+}
+
+#cell1,
+#cell4,
+#cell7 {
+  border-left: 3px solid black;
+  border-right: 3px solid black;
+}
