@@ -16,49 +16,115 @@ const GameBoard = (() => {
   };
 
   const checkWinner = () => {
-    if (gameBoardArray[0] === gameBoardArray[1] === gameBoardArray[2]) {
-      return true
+    if (
+      (gameBoardArray[0] !== "" &&
+        gameBoardArray[0] === gameBoardArray[1] &&
+        gameBoardArray[0] === gameBoardArray[2]) ||
+      (gameBoardArray[3] !== "" &&
+        gameBoardArray[3] === gameBoardArray[4] &&
+        gameBoardArray[3] === gameBoardArray[5]) ||
+      (gameBoardArray[6] !== "" &&
+        gameBoardArray[6] === gameBoardArray[7] &&
+        gameBoardArray[6] === gameBoardArray[8]) ||
+      (gameBoardArray[0] !== "" &&
+        gameBoardArray[0] === gameBoardArray[4] &&
+        gameBoardArray[0] === gameBoardArray[8]) ||
+      (gameBoardArray[2] !== "" &&
+        gameBoardArray[2] === gameBoardArray[4] &&
+        gameBoardArray[2] === gameBoardArray[6]) ||
+      (gameBoardArray[0] !== "" &&
+        gameBoardArray[0] === gameBoardArray[3] &&
+        gameBoardArray[0] === gameBoardArray[6]) ||
+      (gameBoardArray[1] !== "" &&
+        gameBoardArray[1] === gameBoardArray[4] &&
+        gameBoardArray[1] === gameBoardArray[7]) ||
+      (gameBoardArray[2] !== "" &&
+        gameBoardArray[2] === gameBoardArray[5] &&
+        gameBoardArray[2] === gameBoardArray[8])
+    ) {
+      return true;
     }
-    else if (gameBoardArray[0] === gameBoardArray[1] === gameBoardArray[2]) {return true};
+    if (!gameBoardArray.includes("")) {
+      return "tie";
+    }
+    return false;
+  };
 
+  const clearBoard = () => {
+    for (let index = 0; index < gameBoardArray.length; index += 1) {
+      gameBoardArray[index] = "";
     }
+    const winner = document.querySelector(".winner");
+    const clearButton = document.querySelector(".reset");
+    clearButton.style.display = "none";
+    winner.style.display = "none";
+    winner.textContent = "";
+    displayBoard();
   };
   return {
     addMarker,
     displayBoard,
+    checkWinner,
+    clearBoard,
   };
 })();
 
-const playerFactory = (mark) => {
-  return { mark };
+const playerFactory = (name, mark) => {
+  return { name, mark };
 };
 
-const Game = () => {
+const Game = (() => {
   /* player constructor */
-  const player1 = playerFactory("x");
-  const player2 = playerFactory("o");
-  let currentPlayer = player1.mark;
+  const player1 = playerFactory("Gabe", "x");
+  const player2 = playerFactory("Leah", "o");
+  let currentPlayer = player1;
+  let gameOver = false;
   function nextPlayer() {
-    if (currentPlayer === player1.mark) {
-      currentPlayer = player2.mark;
+    if (currentPlayer === player1) {
+      currentPlayer = player2;
     } else {
-      currentPlayer = player1.mark;
+      currentPlayer = player1;
     }
   }
   const cells = document.querySelectorAll(".cell");
   cells.forEach((cell) => {
     cell.addEventListener("click", (e) => {
+      if (gameOver) {
+        return;
+      }
+      if (e.target.textContent !== "") {
+        return;
+      }
       let index = e.target.id;
       index = index.slice(-1);
-      GameBoard.addMarker(currentPlayer, index);
-      const results = GameBoard.checkWinner;
+      GameBoard.addMarker(currentPlayer.mark, index);
+      const winner = document.querySelector(".winner");
+      const results = GameBoard.checkWinner();
+      const clearButton = document.querySelector(".reset");
+      GameBoard.displayBoard();
+      if (results === "tie") {
+        gameOver = true;
+        winner.style.display = "block";
+        winner.textContent = "Game was a Tie!";
+        clearButton.style.display = "block";
+        clearButton.addEventListener("click", () => {
+          GameBoard.clearBoard();
+          gameOver = false;
+        });
+        return;
+      }
       if (results) {
-        console.log(`${currentPlayer} wins!`);
+        gameOver = true;
+        winner.style.display = "block";
+        winner.textContent = `${currentPlayer.name} is the winner!`;
+        clearButton.style.display = "block";
+        clearButton.addEventListener("click", () => {
+          GameBoard.clearBoard();
+          gameOver = false;
+        });
+        return;
       }
       nextPlayer();
-      GameBoard.displayBoard();
     });
   });
-};
-
-Game();
+})();

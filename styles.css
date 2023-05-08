@@ -21,3 +21,18 @@ body {
   border-left: 3px solid black;
   border-right: 3px solid black;
 }
+
+.winner {
+  display: none;
+}
+
+.reset {
+  display: none;
+}
+
+form {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-color: white;
+}
