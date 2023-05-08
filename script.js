@@ -73,12 +73,10 @@ const playerFactory = (name, mark) => {
   return { name, mark };
 };
 
-const Game = (() => {
-  /* player constructor */
-  const player1 = playerFactory("Gabe", "x");
-  const player2 = playerFactory("Leah", "o");
+const Game = (player1, player2) => {
   let currentPlayer = player1;
   let gameOver = false;
+
   function nextPlayer() {
     if (currentPlayer === player1) {
       currentPlayer = player2;
@@ -126,5 +124,20 @@ const Game = (() => {
       }
       nextPlayer();
     });
+  });
+};
+
+const Form = (() => {
+  const playButton = document.querySelector(".play");
+  playButton.addEventListener("click", (event) => {
+    event.preventDefault();
+    const form = document.getElementById("form");
+    form.style.visibility = "hidden";
+
+    const player1Input = document.getElementById("player1");
+    const player2Input = document.getElementById("player2");
+    const player1 = playerFactory(player1Input.value, "x");
+    const player2 = playerFactory(player2Input.value, "o");
+    Game(player1, player2);
   });
 })();
