@@ -10,30 +10,24 @@
   </head>
   <form action="" id="form">
     <h1>Tic Tac Toe</h1>
-    <label for="player1">
-      Player 1:
-      <input
-        type="text"
-        name="player 1"
-        placeholder="Enter Player 1's Name:"
-        id="player1"
-      />
-    </label>
-    <label for="player2">
-      Player 2:
-      <input
-        type="text"
-        name="player 2"
-        placeholder="Enter Player 2's Name:"
-        id="player2"
-      />
-    </label>
+    <div class="input-container">
+      <label for="player1">
+        Player 1:
+        <input type="text" name="player 1" id="player1" value="Player 1" />
+      </label>
+      <label for="player2">
+        Player 2:
+        <input type="text" name="player 2" value="Player 2" id="player2" />
+      </label>
+    </div>
     <input type="submit" value="Play" class="play" />
   </form>
   <body>
     <h1>Tic Tac Toe</h1>
-    <div class="winner"></div>
-    <button class="reset">Play Again?</button>
+    <div class="winner-container">
+      <div class="winner"></div>
+      <button class="reset">Play Again?</button>
+    </div>
     <div class="board">
       <div class="cell" id="cell0"></div>
       <div class="cell" id="cell1"></div>

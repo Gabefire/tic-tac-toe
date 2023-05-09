@@ -136,8 +136,8 @@ const Form = (() => {
 
     const player1Input = document.getElementById("player1");
     const player2Input = document.getElementById("player2");
-    const player1 = playerFactory(player1Input.value, "x");
-    const player2 = playerFactory(player2Input.value, "o");
+    const player1 = playerFactory(player1Input.value, "X");
+    const player2 = playerFactory(player2Input.value, "O");
     Game(player1, player2);
   });
 })();
